@@ -767,7 +767,7 @@ class MapboxMapController: NSObject, FlutterPlatformView, MGLMapViewDelegate, Ma
     func addCustomSource(sourceId: String, geojson: String) {
         // NB: we're too lazy to change the name but it should be called addSourceOrSetData
         do {
-            let parsed = try MGLShape.init(data: geojson.data(using: .utf8)!, encoding: String.Encoding.utf8.rawValue)
+            let parsed = try MGLShape(data: geojson.data(using: .utf8)!, encoding: String.Encoding.utf8.rawValue)
             let source = mapView.style?.source(withIdentifier: sourceId)
             if let shapeSource = source as? MGLShapeSource {
                 shapeSource.shape = parsed
