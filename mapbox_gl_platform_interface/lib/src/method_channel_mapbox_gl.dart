@@ -616,6 +616,14 @@ class MethodChannelMapboxGl extends MapboxGlPlatform {
   }
 
   @override
+  Future<void> addCustomSource(String sourceId, String geojson) async {
+    await _channel.invokeMethod('source#add', <String, dynamic>{
+      'sourceId': sourceId,
+      'geojson': geojson,
+    });
+  }
+
+  @override
   Future<void> addRasterLayer(
       String sourceId, String layerId, Map<String, dynamic> properties,
       {String? belowLayerId,

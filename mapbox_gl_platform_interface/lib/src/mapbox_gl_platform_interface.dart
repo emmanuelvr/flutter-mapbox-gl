@@ -152,6 +152,10 @@ abstract class MapboxGlPlatform {
 
   Future<void> addSource(String sourceId, SourceProperties properties);
 
+  Future<void> addCustomSource(String sourceId, String geojson) async {
+    throw UnimplementedError('addSource() has not been implemented.');
+  }
+
   @mustCallSuper
   void dispose() {
     // clear all callbacks to avoid cyclic refs

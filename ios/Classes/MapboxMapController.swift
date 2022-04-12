@@ -727,6 +727,15 @@ class MapboxMapController: NSObject, FlutterPlatformView, MGLMapViewDelegate, Ma
             addSourceGeojson(sourceId: sourceId, geojson: geojson)
             result(nil)
 
+        case "source#add":
+            guard let arguments = methodCall.arguments as? [String: Any] else { return }
+            guard let sourceId = arguments["sourceId"] as? String else { return }
+            guard let geojson = arguments["geojson"] as? String else { return }
+
+            addCustomSource(sourceId: sourceId, geojson: geojson)
+
+            result(nil)
+
         case "style#addSource":
             guard let arguments = methodCall.arguments as? [String: Any] else { return }
             guard let sourceId = arguments["sourceId"] as? String else { return }
@@ -749,6 +758,25 @@ class MapboxMapController: NSObject, FlutterPlatformView, MGLMapViewDelegate, Ma
             result(nil)
         default:
             result(FlutterMethodNotImplemented)
+        }
+    }
+
+     /*
+     * Adds a geojson source to the mapbox map
+     */
+    func addCustomSource(sourceId: String, geojson: String) {
+        // NB: we're too lazy to change the name but it should be called addSourceOrSetData
+        do {
+            let parsed = try MGLShape.init(data: geojson.data(using: .utf8)!, encoding: String.Encoding.utf8.rawValue)
+            let source = mapView.style?.source(withIdentifier: sourceId)
+            if let shapeSource = source as? MGLShapeSource {
+                shapeSource.shape = parsed
+            }
+            else {
+                let source = MGLShapeSource(identifier: sourceId, shape: parsed, options: [:])
+                mapView.style?.addSource(source)
+            }
+        } catch {
         }
     }
 

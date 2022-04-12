@@ -355,6 +355,12 @@ class MapboxMapController extends ChangeNotifier {
     );
   }
 
+  /// Adds the geojson source to the map
+  /// source is a geoJson file
+  Future<void> addCustomSource(String sourceId, String geojson) async {
+    await _mapboxGlPlatform.addCustomSource(sourceId, geojson);
+  }
+
   /// Add a line layer to the map with the given properties
   ///
   /// Consider using [addLayer] for an unified layer api.
