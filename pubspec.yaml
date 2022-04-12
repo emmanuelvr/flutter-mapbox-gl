@@ -9,6 +9,7 @@ dependencies:
   mapbox_gl_platform_interface:
     git:
       url: https://github.com/emmanuelvr/flutter-mapbox-gl.git
+      ref: custom
       path: mapbox_gl_platform_interface
   mapbox_gl_web:
     git:
